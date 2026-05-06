@@ -38,9 +38,15 @@
         .navbar-lateral a:hover{
             color: var(--color-principal);
         }
-        h1{
+        @keyframes pulsar {
+            0%, 100% { text-shadow: 0 0 10px var(--color-principal); }
+            50%       { text-shadow: 0 0 40px var(--color-principal), 0 0 80px var(--color-principal); }
+        }
+
+        h1 {
             color: var(--color-principal);
             font-size: 60px;
+            animation: pulsar 2s ease-in-out infinite;
         }
         h2{
             color: var(--color-principal);
@@ -101,6 +107,58 @@
             line-height: 1.8;
             color: #94a3b8;
         }
+
+        .stats-contenedor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+        .stats {
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            overflow: hidden;
+            min-width: 350px;
+        }
+
+        .stat-fila {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-fila:last-child {
+            border-bottom: none;
+        }
+
+        .stat-nombre {
+            color: #94a3b8;
+            width: 120px;
+            text-align: left;
+        }
+
+        .stat-barra-contenedor {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            height: 6px;
+        }
+
+        .stat-barra {
+            height: 6px;
+            background: var(--color-principal);
+            border-radius: 4px;
+        }
+
+        .stat-valor {
+            color: var(--color-principal);
+            font-weight: bold;
+            width: 40px;
+            text-align: right;
+        }
+
         .contenedor-skins {
             display: flex;
             align-items: center;
@@ -125,11 +183,11 @@
         .skins {
             display: flex;
             overflow: hidden;
-            width: calc(3 * 166px);
+            width: calc(3 * 116px);
         }
 
         .skin-item {
-            min-width: 150px;
+            min-width: 100px;
             margin: 0 8px;
             display: flex;
             flex-direction: column;
@@ -230,11 +288,11 @@
 </head>
 <body>
     <nav class="navbar-lateral">
+        <a href="#inicio">Inicio</a>
         <a href="#lore">Lore</a>
-        <a href="#skins">Skins</a>
         <a href="#habilidades">Habilidades</a>
     </nav>
-    <section class="hero">
+    <section class="hero" id="inicio">
         <div class="hero-texto">
             <p class="hero-subtitulo">La Chispa de Zaun</p>
             <h1>Zeri</h1>
@@ -246,6 +304,40 @@
         </div>
         <div class="hero-imagen">
             <img id="imagen-principal" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="450">
+            <div class="contenedor-skins" style="margin-top: 16px;">
+                <button onclick="moverSkins(-1)">◀</button>
+                <div class="skins" id="contenedor-imagenes">
+                    <div class="skin-item">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="100" class="skin" onclick="cambiarColor('base')">
+                        <p>Zeri</p>
+                    </div>
+                    <div class="skin-item">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg" width="100" class="skin" onclick="cambiarColor('witheredrose')">
+                        <p>Withered Rose</p>
+                    </div>
+                    <div class="skin-item">
+                        <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b" width="100" class="skin" onclick="cambiarColor('oceansong')">
+                        <p>Ocean Song</p>
+                    </div>
+                    <div class="skin-item">
+                        <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f" width="100" class="skin" onclick="cambiarColor('immortaljourney')">
+                        <p>Immortal Journey</p>
+                    </div>
+                    <div class="skin-item">
+                        <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99" width="100" class="skin" onclick="cambiarColor('frightnight')">
+                        <p>Fright Night</p>
+                    </div>
+                    <div class="skin-item">
+                        <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb" width="100" class="skin" onclick="cambiarColor('prestige')">
+                        <p>Prestige Fright Night</p>
+                    </div>
+                    <div class="skin-item">
+                        <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3" width="100" class="skin" onclick="cambiarColor('winterwonder')">
+                        <p>Winter Wonder</p>
+                    </div>
+                </div>
+                <button onclick="moverSkins(1)">▶</button>
+            </div>
         </div>
     </section>
     <section class="lore">
@@ -259,43 +351,59 @@
         y corre hacia él con toda la energía que lleva dentro.
         </p>
     </section>
+    
     <section>
-        <h2 id="skins">Skins</h2>
-        <div class="contenedor-skins">
-            <button onclick="moverSkins(-1)">◀</button>
-            <div class="skins" id="contenedor-imagenes">
-                <div class="skin-item">
-                    <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="150" class="skin" onclick="cambiarColor('base')">
-                    <p>Zeri</p>
+        <h2>Estadísticas Base</h2>
+        <div class="stats-contenedor">
+            <img src="https://media1.tenor.com/m/ia_kV_6hmJgAAAAC/zeri-league-of-legends.gif" width="250">
+            <div class="stats">
+                <div class="stat-fila">
+                    <span class="stat-nombre">❤️ HP</span>
+                    <div class="stat-barra-contenedor">
+                        <div class="stat-barra" style="width: 70%"></div>
+                    </div>
+                    <span class="stat-valor">600</span>
                 </div>
-                <div class="skin-item">
-                    <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg" width="150" class="skin" onclick="cambiarColor('witheredrose')">
-                    <p>Withered Rose</p>
+                <div class="stat-fila">
+                    <span class="stat-nombre">💧 Mana</span>
+                    <div class="stat-barra-contenedor">
+                        <div class="stat-barra" style="width: 40%"></div>
+                    </div>
+                    <span class="stat-valor">250</span>
                 </div>
-                <div class="skin-item">
-                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b" width="150" class="skin" onclick="cambiarColor('oceansong')">
-                    <p>Ocean Song</p>
+                <div class="stat-fila">
+                    <span class="stat-nombre">⚔️ Daño</span>
+                    <div class="stat-barra-contenedor">
+                        <div class="stat-barra" style="width: 55%"></div>
+                    </div>
+                    <span class="stat-valor">56</span>
                 </div>
-                <div class="skin-item">
-                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f" width="150" class="skin" onclick="cambiarColor('immortaljourney')">
-                    <p>Immortal Journey</p>
+                <div class="stat-fila">
+                    <span class="stat-nombre">🛡️ Armadura</span>
+                    <div class="stat-barra-contenedor">
+                        <div class="stat-barra" style="width: 30%"></div>
+                    </div>
+                    <span class="stat-valor">24</span>
                 </div>
-                <div class="skin-item">
-                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99" width="150" class="skin" onclick="cambiarColor('frightnight')">
-                    <p>Fright Night</p>
+                <div class="stat-fila">
+                    <span class="stat-nombre">✨ Res. Mágica</span>
+                    <div class="stat-barra-contenedor">
+                        <div class="stat-barra" style="width: 35%"></div>
+                    </div>
+                    <span class="stat-valor">30</span>
                 </div>
-                <div class="skin-item">
-                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb" width="150" class="skin" onclick="cambiarColor('prestige')">
-                    <p>Prestige Fright Night</p>
-                </div>
-                <div class="skin-item">
-                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3" width="150" class="skin" onclick="cambiarColor('winterwonder')">
-                    <p>Winter Wonder</p>
+                <div class="stat-fila">
+                    <span class="stat-nombre">👟 Velocidad</span>
+                    <div class="stat-barra-contenedor">
+                        <div class="stat-barra" style="width: 60%"></div>
+                    </div>
+                    <span class="stat-valor">330</span>
                 </div>
             </div>
-            <button onclick="moverSkins(1)">▶</button>
         </div>
     </section>
+            
+    
     <section>
         <h2 id="habilidades">Habilidades</h2>
         <div class="habilidades">
@@ -347,15 +455,19 @@
                 document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_WitheredRoseCircle.png/48px-Zeri_WitheredRoseCircle.png?db3e4';
             } else if (skin === 'oceansong') {
                 document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_OceanSongCircle.png/48px-Zeri_OceanSongCircle.png?03d4c';
             } else if (skin === 'immortaljourney') {
                 document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_ImmortalJourneyCircle.png/48px-Zeri_ImmortalJourneyCircle.png?26ea1';
             } else if (skin === 'frightnight') {
                 document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_FrightNightCircle.png/48px-Zeri_FrightNightCircle.png?089c7';
             } else if (skin === 'prestige') {
                 document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb';
                 document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_PrestigeFrightNightCircle.png/48px-Zeri_PrestigeFrightNightCircle.png?80e42';
             } else if (skin === 'winterwonder') {
                 document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_WinterWonderCircle.png/48px-Zeri_WinterWonderCircle.png?a2b6d';
             }
         }
 
