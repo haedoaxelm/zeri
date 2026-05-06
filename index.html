@@ -125,17 +125,34 @@
         .skins {
             display: flex;
             overflow: hidden;
-            width: 500px;
+            width: calc(3 * 166px);
         }
-        .skin{
+
+        .skin-item {
+            min-width: 150px;
+            margin: 0 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .skin {
             border-radius: 8px;
-            margin: 8px;
             cursor: pointer;
             border: 2px solid transparent;
             transition: border 0.3s;
         }
-        .skin:hover{
+
+        .skin:hover {
             border: 2px solid var(--color-principal);
+        }
+
+        .skin-item p {
+            margin: 6px 0 0 0;
+            font-size: 12px;
+            color: var(--color-principal);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
         body.base {
             background-color: #0a0f1e;
@@ -172,6 +189,43 @@
             color: #334155;
             font-size: 0.85rem;
         }
+        section{
+            padding: 80px 0;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            gap: 60px;
+            padding: 0 60px;
+        }
+
+        .hero-texto {
+            text-align: left;
+            max-width: 450px;
+        }
+
+        .hero-subtitulo {
+            color: var(--color-principal);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .descripcion {
+            max-width: 500px;
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #94a3b8;
+        }
+        .lore {
+            text-align: center;
+        }
+        .lore .descripcion {
+            margin: 20px auto;
+        }
     </style>
 </head>
 <body>
@@ -180,78 +234,107 @@
         <a href="#skins">Skins</a>
         <a href="#habilidades">Habilidades</a>
     </nav>
-    <h1>Zeri</h1>
-    <p>La Chispa de Zaun</p>
-    <img id="imagen-principal"src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="400">
-    <p class="descripcion">
-        Zeri es una joven de Zaun que creció canalizando electricidad a través de su cuerpo.
-        Usa una pistola artesanal construida por su familia para proteger a los suyos.
-        Rápida, impulsiva, y con el corazón en el lugar correcto.
-    </p>
-    
-    <h2 id="lore">Lore</h2>
-    <p class="descripcion">
-        Zeri creció en los callejones grises de Zaun, rodeada de una familia unida que le enseñó 
-    que la comunidad es lo más importante. Desde pequeña manifestó una conexión inusual con 
-    la electricidad, que fluía a través de su cuerpo reflejando sus emociones. Su abuela le 
-    construyó una pistola especial para canalizar ese poder, y Zeri la usa para proteger 
-    a los suyos de las bandas y peligros de Zaun. Sueña con un futuro mejor para su ciudad, 
-    y corre hacia él con toda la energía que lleva dentro.
-    </p>
-
-    <h2 id="skins">Skins</h2>
-    <div class="contenedor-skins">
-        <button onclick="moverSkins(-1)">◀</button>
-         <div class="skins" id="contenedor-imagenes">
-            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="150" class="skin" onclick="cambiarColor('base')">
-            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg" width="150" class="skin" onclick="cambiarColor('witheredrose')">
-            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b" width="150" class="skin" onclick="cambiarColor('oceansong')">
-            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f" width="150" class="skin" onclick="cambiarColor('immortaljourney')">
-            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99" width="150" class="skin" onclick="cambiarColor('frightnight')">
-            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb" width="150" class="skin" onclick="cambiarColor('prestige')">
-            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3" width="150" class="skin" onclick="cambiarColor('winterwonder')">
+    <section class="hero">
+        <div class="hero-texto">
+            <p class="hero-subtitulo">La Chispa de Zaun</p>
+            <h1>Zeri</h1>
+            <p class="descripcion">
+                Zeri es una joven de Zaun que creció canalizando electricidad a través de su cuerpo.
+                Usa una pistola artesanal construida por su familia para proteger a los suyos.
+                Rápida, impulsiva, y con el corazón en el lugar correcto.
+            </p>
         </div>
-        <button onclick="moverSkins(1)">▶</button>
-    </div>
-    
-    <h2 id="habilidades">Habilidades</h2>
-    <div class="habilidades">
-        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
-            <h3>Pasiva - Poder Vital</h3>
-            <p>La electricidad le da velocidad cuando tiene escudos</p>
-            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
+        <div class="hero-imagen">
+            <img id="imagen-principal" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="450">
+        </div>
+    </section>
+    <section class="lore">
+        <h2 id="lore">Lore</h2>
+        <p class="descripcion">
+            Zeri creció en los callejones grises de Zaun, rodeada de una familia unida que le enseñó 
+        que la comunidad es lo más importante. Desde pequeña manifestó una conexión inusual con 
+        la electricidad, que fluía a través de su cuerpo reflejando sus emociones. Su abuela le 
+        construyó una pistola especial para canalizar ese poder, y Zeri la usa para proteger 
+        a los suyos de las bandas y peligros de Zaun. Sueña con un futuro mejor para su ciudad, 
+        y corre hacia él con toda la energía que lleva dentro.
+        </p>
+    </section>
+    <section>
+        <h2 id="skins">Skins</h2>
+        <div class="contenedor-skins">
+            <button onclick="moverSkins(-1)">◀</button>
+            <div class="skins" id="contenedor-imagenes">
+                <div class="skin-item">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="150" class="skin" onclick="cambiarColor('base')">
+                    <p>Zeri</p>
+                </div>
+                <div class="skin-item">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg" width="150" class="skin" onclick="cambiarColor('witheredrose')">
+                    <p>Withered Rose</p>
+                </div>
+                <div class="skin-item">
+                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b" width="150" class="skin" onclick="cambiarColor('oceansong')">
+                    <p>Ocean Song</p>
+                </div>
+                <div class="skin-item">
+                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f" width="150" class="skin" onclick="cambiarColor('immortaljourney')">
+                    <p>Immortal Journey</p>
+                </div>
+                <div class="skin-item">
+                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99" width="150" class="skin" onclick="cambiarColor('frightnight')">
+                    <p>Fright Night</p>
+                </div>
+                <div class="skin-item">
+                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb" width="150" class="skin" onclick="cambiarColor('prestige')">
+                    <p>Prestige Fright Night</p>
+                </div>
+                <div class="skin-item">
+                    <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3" width="150" class="skin" onclick="cambiarColor('winterwonder')">
+                    <p>Winter Wonder</p>
+                </div>
+            </div>
+            <button onclick="moverSkins(1)">▶</button>
+        </div>
+    </section>
+    <section>
+        <h2 id="habilidades">Habilidades</h2>
+        <div class="habilidades">
+            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
+                <h3>Pasiva - Poder Vital</h3>
+                <p>La electricidad le da velocidad cuando tiene escudos</p>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
+                </div>
+            </div>
+
+            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
+                <h3>Q - Descarga Básica</h3>
+                <p>Dispara un rayo que rebota entre enemigos cercanos</p>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
+                </div>
+            </div>
+
+            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
+                <h3>W - Chispa Errante</h3>
+                <p>Lanza una rafaga electrica. puede recargar escudos alidos</p>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
+                </div>
+            </div>
+
+            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
+                <h3>E - Salto Electrico</h3>
+                <p>Dash rapido hacia adelante, puede atravesar paredes</p>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
+                </div>
+            </div>
+
+            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
+                <h3>R - Tormenta Relampago</h3>
+                <p>Descarga explosiva que noquea enemigos y potencia a Zeri</p>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
+                </div>
             </div>
         </div>
-
-        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
-            <h3>Q - Descarga Básica</h3>
-            <p>Dispara un rayo que rebota entre enemigos cercanos</p>
-            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
-            </div>
-        </div>
-
-        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
-            <h3>W - Chispa Errante</h3>
-            <p>Lanza una rafaga electrica. puede recargar escudos alidos</p>
-            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
-            </div>
-        </div>
-
-        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
-            <h3>E - Salto Electrico</h3>
-            <p>Dash rapido hacia adelante, puede atravesar paredes</p>
-            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
-            </div>
-        </div>
-
-        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
-            <h3>R - Tormenta Relampago</h3>
-            <p>Descarga explosiva que noquea enemigos y potencia a Zeri</p>
-            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
-            </div>
-        </div>
-    </div>
-
+    </section>
     <script>
         function cambiarColor(skin) {
             document.body.className = skin;
@@ -278,8 +361,8 @@
 
         function moverSkins(direccion) {
             const contenedor = document.getElementById('contenedor-imagenes');
-            const imagen = contenedor.querySelector('img');
-            const ancho = imagen.getBoundingClientRect().width + 16;
+            const item = contenedor.querySelector('.skin-item');
+            const ancho = item.getBoundingClientRect().width + 16;
             contenedor.scrollLeft += direccion * ancho;
         }
 
