@@ -2,25 +2,41 @@
 <head>
     <title>Zeri</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon: cambia según la skin seleccionada (se actualiza con JS) -->
     <link id="favicon" rel="icon" href="https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_OriginalCircle.png/48px-Zeri_OriginalCircle.png?8ae8b">
+    <!-- Bootstrap 5: framework CSS para estilos base y utilidades -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
+        /* ============================================================
+           VARIABLES GLOBALES
+           Se definen aquí para poder cambiarlas fácilmente desde JS
+           añadiendo una clase al body (ver sección de temas/skins).
+        ============================================================ */
         :root{
-            --color-principal: #f5e642;
+            --color-principal: #f5e642; /* Amarillo base de Zeri */
         }
+
+        /* Estilos generales del cuerpo de la página */
         body{
             background-color: #0a0f1e;
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
         }
+
+        /* ============================================================
+           NAVBAR LATERAL
+           Aparece fija a la izquierda al hacer scroll (escritorio)
+           o como menú desplegable arriba (móvil).
+        ============================================================ */
         .navbar-lateral{
             position: fixed;
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            display: none;
+            display: none; /* Se activa con JS al hacer scroll */
             flex-direction: column;
             gap: 8px;
             padding: 16px 12px;
@@ -39,6 +55,8 @@
         .navbar-lateral a:hover{
             color: var(--color-principal);
         }
+
+        /* Botón ☰ visible solo en móvil para abrir el menú */
         .btn-hamburguesa {
             display: none;
             position: fixed;
@@ -54,6 +72,11 @@
             cursor: pointer;
             z-index: 1000;
         }
+
+        /* ============================================================
+           ANIMACIÓN: PULSAR
+           Hace que el h1 brille de forma cíclica usando text-shadow.
+        ============================================================ */
         @keyframes pulsar {
             0%, 100% { text-shadow: 0 0 10px var(--color-principal); }
             50%       { text-shadow: 0 0 40px var(--color-principal), 0 0 80px var(--color-principal); }
@@ -78,6 +101,12 @@
             margin: 8px 0;
             font-size: 18px;
         }
+
+        /* ============================================================
+           TARJETAS DE HABILIDADES
+           Cada tarjeta muestra el nombre y descripción de una habilidad.
+           Al hacer hover aparece un tooltip con un video de demostración.
+        ============================================================ */
         .habilidades{
             display: inline-block;
             text-align: left;
@@ -90,8 +119,9 @@
             padding: 16px;
             margin: 10px 0;
             width: 400px;
-            position: relative;
+            position: relative; /* Necesario para posicionar el tooltip */
         }
+        /* Tooltip con video: se posiciona a la derecha de la tarjeta */
         .tooltip-video{
             display: none;
             position: absolute;
@@ -109,6 +139,7 @@
         .tooltip-video video{
             width: 100%;
         }
+        /* El tooltip aparece cuando el usuario pasa el mouse por la tarjeta */
         .tarjeta:hover .tooltip-video{
             display: block;
             opacity: 1;
@@ -124,6 +155,10 @@
             color: #94a3b8;
         }
 
+        /* ============================================================
+           SECCIÓN DE ESTADÍSTICAS
+           Barras visuales que representan los stats base de Zeri.
+        ============================================================ */
         .stats-contenedor {
             display: flex;
             align-items: center;
@@ -136,7 +171,6 @@
             overflow: hidden;
             min-width: 350px;
         }
-
         .stat-fila {
             display: flex;
             align-items: center;
@@ -144,30 +178,27 @@
             padding: 10px 20px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
         .stat-fila:last-child {
             border-bottom: none;
         }
-
         .stat-nombre {
             color: #94a3b8;
             width: 120px;
             text-align: left;
         }
-
+        /* Contenedor gris de fondo para la barra */
         .stat-barra-contenedor {
             flex: 1;
             background: rgba(255,255,255,0.1);
             border-radius: 4px;
             height: 6px;
         }
-
+        /* Barra coloreada: su ancho (en %) representa el valor del stat */
         .stat-barra {
             height: 6px;
             background: var(--color-principal);
             border-radius: 4px;
         }
-
         .stat-valor {
             color: var(--color-principal);
             font-weight: bold;
@@ -175,6 +206,10 @@
             text-align: right;
         }
 
+        /* ============================================================
+           CARRUSEL DE SKINS
+           Muestra miniaturas de las skins; se desplaza con botones.
+        ============================================================ */
         .contenedor-skins {
             display: flex;
             align-items: center;
@@ -196,12 +231,12 @@
             background: var(--color-principal);
             color: #0a0f1e;
         }
+        /* Ventana del carrusel: solo muestra 3 skins a la vez */
         .skins {
             display: flex;
             overflow: hidden;
             width: calc(3 * 116px);
         }
-
         .skin-item {
             min-width: 100px;
             margin: 0 8px;
@@ -209,18 +244,15 @@
             flex-direction: column;
             align-items: center;
         }
-
         .skin {
             border-radius: 8px;
             cursor: pointer;
             border: 2px solid transparent;
             transition: border 0.3s;
         }
-
         .skin:hover {
             border: 2px solid var(--color-principal);
         }
-
         .skin-item p {
             margin: 6px 0 0 0;
             font-size: 12px;
@@ -228,34 +260,21 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
         }
-        body.base {
-            background-color: #0a0f1e;
-            --color-principal: #f5e642;
-        }
-        body.witheredrose {
-            background-color: #1a0812;
-            --color-principal: #f542a7;
-        }
-        body.oceansong {
-            background-color: #051520;
-            --color-principal: #42c8f5;
-        }
-        body.immortaljourney {
-            background-color: #1a0e00;
-            --color-principal: #f5c842;
-        }
-        body.frightnight {
-            background-color: #050f05;
-            --color-principal: #42f55a;
-        }
-        body.prestige {
-            background-color: #0d0520;
-            --color-principal: #c842f5;
-        }
-        body.winterwonder {
-            background-color: #05101a;
-            --color-principal: #e8f0ff;
-        }
+
+        /* ============================================================
+           TEMAS POR SKIN
+           Cada clase aplicada al body cambia el fondo y el color principal.
+           Esto hace que todos los elementos que usan var(--color-principal)
+           se actualicen automáticamente.
+        ============================================================ */
+        body.base           { background-color: #0a0f1e; --color-principal: #f5e642; }
+        body.witheredrose   { background-color: #1a0812; --color-principal: #f542a7; }
+        body.oceansong      { background-color: #051520; --color-principal: #42c8f5; }
+        body.immortaljourney{ background-color: #1a0e00; --color-principal: #f5c842; }
+        body.frightnight    { background-color: #050f05; --color-principal: #42f55a; }
+        body.prestige       { background-color: #0d0520; --color-principal: #c842f5; }
+        body.winterwonder   { background-color: #05101a; --color-principal: #e8f0ff; }
+
         footer{
             margin-top: 60px;
             padding: 32px 0;
@@ -266,6 +285,11 @@
         section{
             padding: 80px 0;
         }
+
+        /* ============================================================
+           SECCIÓN HERO (inicio)
+           Layout horizontal con texto a la izquierda e imagen a la derecha.
+        ============================================================ */
         .hero {
             display: flex;
             align-items: center;
@@ -274,12 +298,10 @@
             gap: 60px;
             padding: 0 60px;
         }
-
         .hero-texto {
             text-align: left;
             max-width: 450px;
         }
-
         .hero-subtitulo {
             color: var(--color-principal);
             letter-spacing: 0.3em;
@@ -287,7 +309,6 @@
             font-size: 0.9rem;
             margin-bottom: 8px;
         }
-
         .descripcion {
             max-width: 500px;
             margin: 20px 0;
@@ -300,8 +321,13 @@
         .lore .descripcion {
             margin: 20px auto;
         }
-        
+
+        /* ============================================================
+           RESPONSIVE (pantallas pequeñas)
+           Cambia el layout para que sea usable en celular.
+        ============================================================ */
         @media (max-width: 768px) {
+            /* El menú lateral pasa a ser una barra horizontal arriba */
             .navbar-lateral {
                 display: none;
                 top: 0;
@@ -318,15 +344,15 @@
                 z-index: 999;
             }
             .btn-hamburguesa {
-                display: block;
+                display: block; /* Solo visible en móvil */
             }
+            /* El hero pasa de columnas a filas (vertical) */
             .hero {
                 flex-direction: column;
                 min-height: auto;
                 padding: 40px 20px;
                 gap: 30px;
             }
-
             .hero-texto {
                 text-align: center;
             }
@@ -338,11 +364,10 @@
                 min-width: 80px;
                 margin: 0 12px;
             }
-
+            /* En móvil el carrusel es deslizable con el dedo, se ocultan los botones */
             .contenedor-skins button {
                 display: none;
             }
-
             .skins {
                 width: 100%;
                 overflow-x: auto;
@@ -351,7 +376,6 @@
                 width: 100%;
                 max-width: 100%;
             }
-
             section {
                 padding: 40px 20px;
             }
@@ -363,12 +387,14 @@
                 flex-direction: column;
                 padding: 0 20px;
             }
+            /* Las tarjetas de habilidades se apilan verticalmente */
             .habilidades {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 width: 100%;
             }
+            /* El tooltip de video pasa a estar debajo de la tarjeta en móvil */
             .tooltip-video {
                 position: relative;
                 left: 0;
@@ -380,6 +406,8 @@
                 width: 90%;
             }
         }
+
+        /* Línea divisora entre secciones */
         .divisor {
             border: none;
             border-top: 1px solid var(--color-principal);
@@ -389,15 +417,95 @@
         footer {
             padding: 32px 20px;
         }
+
+        /* ============================================================
+           ESTILOS DE LA TRIVIA
+        ============================================================ */
+        .minijuego-tarjeta {
+            background-color: #111827;
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .meta-texto {
+            color: #64748b;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 0 0 12px 0;
+        }
+        /* Botones de respuesta: estado neutro, correcto e incorrecto */
+        .minijuego-btn-opcion {
+            background: transparent;
+            border: 1px solid #334155;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .minijuego-btn-opcion:hover {
+            border-color: var(--color-principal);
+        }
+        .minijuego-btn-opcion.correcto {
+            border-color: #22c55e;
+            color: #22c55e;
+            background: rgba(34,197,94,0.1);
+            cursor: default;
+        }
+        .minijuego-btn-opcion.incorrecto {
+            border-color: #ef4444;
+            color: #ef4444;
+            background: rgba(239,68,68,0.1);
+            cursor: default;
+        }
+        .resultado-titulo {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            color: var(--color-principal);
+        }
+        .btn-reiniciar {
+            background: transparent;
+            border: 2px solid var(--color-principal);
+            color: var(--color-principal);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-reiniciar:hover {
+            background: var(--color-principal);
+            color: #0a0f1e;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Botón ☰ visible solo en pantallas pequeñas -->
     <button class="btn-hamburguesa" onclick="toggleMenu()">☰</button>
+
+    <!-- Menú de navegación lateral con enlaces a las secciones -->
     <nav class="navbar-lateral">
         <a href="#inicio">Inicio</a>
         <a href="#lore">Lore</a>
         <a href="#habilidades">Habilidades</a>
+        <a href="#trivia">Trivia</a>
     </nav>
+
+    <!-- ============================================================
+         SECCIÓN HERO
+         Presentación del personaje con imagen y selector de skins.
+    ============================================================ -->
     <section class="hero" id="inicio">
         <div class="hero-texto">
             <p class="hero-subtitulo">La Chispa de Zaun</p>
@@ -409,7 +517,10 @@
             </p>
         </div>
         <div class="hero-imagen">
+            <!-- Imagen principal: src se actualiza con JS según la skin elegida -->
             <img id="imagen-principal" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="450">
+
+            <!-- Carrusel de skins: al clicar una miniatura cambia el tema visual -->
             <div class="contenedor-skins" style="margin-top: 16px;">
                 <button onclick="moverSkins(-1)">◀</button>
                 <div class="skins" id="contenedor-imagenes">
@@ -449,6 +560,10 @@
 
     <hr class="divisor">
 
+    <!-- ============================================================
+         SECCIÓN LORE
+         Historia resumida del personaje.
+    ============================================================ -->
     <section class="lore">
         <h2 id="lore">Lore</h2>
         <p class="descripcion">
@@ -460,7 +575,12 @@
         y corre hacia él con toda la energía que lleva dentro.
         </p>
     </section>
-    
+
+    <!-- ============================================================
+         SECCIÓN ESTADÍSTICAS
+         Barras de progreso que muestran los stats base del personaje.
+         El ancho de .stat-barra (en %) es proporcional al valor del stat.
+    ============================================================ -->
     <section>
         <h2>Estadísticas Base</h2>
         <div class="stats-contenedor">
@@ -511,48 +631,100 @@
             </div>
         </div>
     </section>
-            
-    
+
+    <!-- ============================================================
+         SECCIÓN HABILIDADES
+         Cada tarjeta muestra una habilidad. Al hacer hover sobre ella
+         aparece un video de demostración a la derecha (tooltip-video).
+         El video se crea dinámicamente con JS para no cargarlo antes.
+    ============================================================ -->
     <section>
         <h2 id="habilidades">Habilidades</h2>
         <div class="habilidades">
-            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
+
+            <div class="tarjeta">
                 <h3>Pasiva - Batería Humana</h3>
                 <p>Moverse y lanzar Ráfaga de Luz permite que Zeri almacene energía</p>
-                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
-                </div>
+                <!-- data-src guarda la URL del video; JS la usa al hacer hover -->
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL"></div>
             </div>
 
-            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
+            <div class="tarjeta">
                 <h3>Q - Ráfaga de Luz</h3>
                 <p>Dispara 7 balas consecutivas</p>
-                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
-                </div>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL"></div>
             </div>
 
-            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
+            <div class="tarjeta">
                 <h3>W - Láser Ultracargado</h3>
                 <p>Dispara un pulso eléctrico, al impactar una pared se extiende como láser de largo alcance</p>
-                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
-                </div>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL"></div>
             </div>
 
-            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
+            <div class="tarjeta">
                 <h3>E - Chispazo</h3>
                 <p>Desplazamiento rápido hacia adelante, puede atravesar paredes</p>
-                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
-                </div>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL"></div>
             </div>
 
-            <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
+            <div class="tarjeta">
                 <h3>R - Estallido Eléctrico</h3>
                 <p>Descarga una nova de electricidad y potencia a Zeri</p>
-                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
-                </div>
+                <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL"></div>
             </div>
+
         </div>
     </section>
+
+    <hr class="divisor">
+
+    <!-- ============================================================
+         SECCIÓN TRIVIA
+         Mini juego de 5 preguntas. Muestra una pregunta a la vez.
+         Al terminar muestra el puntaje y un mensaje personalizado.
+    ============================================================ -->
+    <section>
+        <h2 id="trivia">⚡ Trivia: ¿Cuánto sabés de Zeri?</h2>
+        <div class="lore"><p class="descripcion">Ponete a prueba con 5 preguntas sobre La Chispa de Zaun</p></div>
+        <div id="trivia-contenedor" style="max-width:500px;margin:0 auto;">
+
+            <!-- Panel de pregunta activa -->
+            <div id="trivia-pregunta" class="minijuego-tarjeta">
+                <p id="numero-pregunta" class="meta-texto">Pregunta 1 de 5</p>
+                <h3 id="texto-pregunta" style="color:white;font-size:18px;margin:0 0 20px 0;"></h3>
+                <div id="opciones"></div> <!-- Los botones de opción se generan con JS -->
+            </div>
+
+            <!-- Panel de resultado final (oculto hasta terminar la trivia) -->
+            <div id="trivia-resultado" style="display:none;" class="minijuego-tarjeta">
+                <h3 id="resultado-titulo" class="resultado-titulo"></h3>
+                <p id="resultado-puntaje" style="color:white;font-size:18px;"></p>
+                <p id="resultado-mensaje" class="descripcion" style="margin:10px 0 20px 0;"></p>
+                <button class="btn-reiniciar" onclick="reiniciarTrivia()">Jugar de nuevo ⚡</button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>Fan page no oficial de Zeri — League of Legends es propiedad de Riot Games</p>
+        <p>Hecho con HTML, CSS y JavaScript</p>
+        <p>Desarrollado por Perez Haedo Axel Manuel</p>
+    </footer>
+
     <script>
+        /*
+         * ============================================================
+         * FUNCIÓN: cambiarColor(skin)
+         * Cambia el tema visual de la página según la skin elegida.
+         *
+         * - Aplica una clase CSS al <body> (ej: "witheredrose")
+         *   que sobreescribe --color-principal y el fondo.
+         * - Actualiza la imagen principal y el favicon.
+         *
+         * Parámetro: skin (string) — nombre de la skin seleccionada
+         * ============================================================
+         */
         function cambiarColor(skin) {
             document.body.className = skin;
 
@@ -580,17 +752,37 @@
             }
         }
 
+        /*
+         * ============================================================
+         * FUNCIÓN: moverSkins(direccion)
+         * Desplaza el carrusel de skins horizontalmente.
+         *
+         * - Calcula el ancho de una skin-item (incluyendo margen).
+         * - Mueve el scroll del contenedor en esa cantidad.
+         *
+         * Parámetro: direccion (número) — -1 para izquierda, 1 para derecha
+         * ============================================================
+         */
         function moverSkins(direccion) {
             const contenedor = document.getElementById('contenedor-imagenes');
             const item = contenedor.querySelector('.skin-item');
-            const ancho = item.getBoundingClientRect().width + 16;
+            const ancho = item.getBoundingClientRect().width + 16; // 16px = margen entre items
             contenedor.scrollLeft += direccion * ancho;
         }
 
+        /*
+         * ============================================================
+         * CARGA LAZY DE VIDEOS EN HABILIDADES
+         * Al hacer hover sobre una tarjeta, crea el elemento <video>
+         * solo si no existe todavía, evitando cargar todos los videos
+         * al inicio de la página.
+         * ============================================================
+         */
         document.querySelectorAll('.tarjeta').forEach(function(tarjeta) {
             tarjeta.addEventListener('mouseenter', function() {
                 const tooltip = tarjeta.querySelector('.tooltip-video');
                 if (tooltip && !tooltip.querySelector('video')) {
+                    // Primera vez que se hace hover: crear el video
                     const src = tooltip.getAttribute('data-src');
                     const video = document.createElement('video');
                     video.autoplay = true;
@@ -602,11 +794,19 @@
                     video.appendChild(source);
                     tooltip.appendChild(video);
                 } else if (tooltip && tooltip.querySelector('video')) {
+                    // Siguientes hovers: reiniciar el video desde el principio
                     tooltip.querySelector('video').currentTime = 0;
                 }
             });
         });
 
+        /*
+         * ============================================================
+         * FUNCIÓN: toggleMenu()
+         * Muestra u oculta el menú en pantallas pequeñas.
+         * Solo actúa si el ancho de pantalla es menor a 768px.
+         * ============================================================
+         */
         function toggleMenu() {
             if (window.innerWidth > 768) return;
             const nav = document.querySelector('.navbar-lateral');
@@ -620,6 +820,10 @@
             }
         }
 
+        /*
+         * Muestra el menú lateral en escritorio al pasar el 50% del scroll.
+         * En móvil no hace nada (se maneja con toggleMenu).
+         */
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('.navbar-lateral');
             if (window.innerWidth > 768) {
@@ -630,13 +834,134 @@
                 }
             }
         });
-</script>
 
-<footer>
-    <p>Fan page no oficial de Zeri — League of Legends es propiedad de Riot Games</p>
-    <p>Hecho con HTML, CSS y JavaScript</p>
-    <p>Desarrollado por Perez Haedo Axel Manuel</p>
-</footer>
+        /* ============================================================
+           TRIVIA — DATOS Y LÓGICA
+           Las preguntas están guardadas en un array de objetos.
+           Cada objeto tiene: pregunta (texto), opciones (array) y
+           correcta (índice de la opción correcta).
+        ============================================================ */
+        const preguntas = [
+            { pregunta: "¿De qué ciudad es originaria Zeri?", opciones: ["Piltover", "Zaun", "Noxus", "Demacia"], correcta: 1 },
+            { pregunta: "¿Quién le construyó la pistola a Zeri?", opciones: ["Su madre", "Su padre", "Su abuela", "Ella misma"], correcta: 2 },
+            { pregunta: "¿Qué hace la E de Zeri (Chispazo)?", opciones: ["Dispara un láser", "Se desplaza hacia adelante y puede atravesar paredes", "Carga energía eléctrica", "Invoca una nova eléctrica"], correcta: 1 },
+            { pregunta: "¿Cuántas balas dispara la Q de Zeri (Ráfaga de Luz)?", opciones: ["5", "6", "7", "8"], correcta: 2 },
+            { pregunta: "¿Cuál es el HP base de Zeri?", opciones: ["520", "560", "600", "640"], correcta: 2 }
+        ];
 
+        // Variables de estado de la trivia
+        let preguntaActual = 0; // Índice de la pregunta en curso
+        let puntaje = 0;        // Cantidad de respuestas correctas
+        let respondida = false; // Evita responder dos veces la misma pregunta
+
+        /*
+         * ============================================================
+         * FUNCIÓN: cargarPregunta()
+         * Muestra la pregunta actual y genera los botones de opciones.
+         * Se llama al inicio y después de cada respuesta.
+         * ============================================================
+         */
+        function cargarPregunta() {
+            respondida = false;
+            const p = preguntas[preguntaActual];
+            document.getElementById('numero-pregunta').textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+            document.getElementById('texto-pregunta').textContent = p.pregunta;
+            const opciones = document.getElementById('opciones');
+            opciones.innerHTML = ''; // Limpia los botones anteriores
+            p.opciones.forEach(function(opcion, i) {
+                const btn = document.createElement('button');
+                btn.textContent = opcion;
+                btn.className = 'minijuego-btn-opcion';
+                btn.onclick = function() { responder(i, btn); };
+                opciones.appendChild(btn);
+            });
+        }
+
+        /*
+         * ============================================================
+         * FUNCIÓN: responder(indice, btn)
+         * Procesa la respuesta del usuario.
+         *
+         * - Marca el botón elegido como correcto o incorrecto.
+         * - Siempre resalta cuál era la correcta.
+         * - Espera 1 segundo y avanza a la siguiente pregunta
+         *   o muestra el resultado final.
+         *
+         * Parámetros:
+         *   indice (número) — índice de la opción clickeada
+         *   btn (elemento) — botón clickeado
+         * ============================================================
+         */
+        function responder(indice, btn) {
+            if (respondida) return; // Evita doble respuesta
+            respondida = true;
+            const correcta = preguntas[preguntaActual].correcta;
+
+            // Marcar todos los botones: siempre mostrar cuál era la correcta
+            document.querySelectorAll('#opciones button').forEach(function(b, i) {
+                b.style.cursor = 'default';
+                if (i === correcta) b.classList.add('correcto');
+            });
+
+            if (indice === correcta) {
+                puntaje++;
+            } else {
+                btn.classList.add('incorrecto'); // Marcar también el elegido si era incorrecto
+            }
+
+            // Avanzar luego de 1 segundo
+            setTimeout(function() {
+                preguntaActual++;
+                if (preguntaActual < preguntas.length) {
+                    cargarPregunta();
+                } else {
+                    mostrarResultadoTrivia();
+                }
+            }, 1000);
+        }
+
+        /*
+         * ============================================================
+         * FUNCIÓN: mostrarResultadoTrivia()
+         * Oculta el panel de pregunta y muestra el panel de resultado.
+         * Elige un mensaje según el puntaje obtenido.
+         * ============================================================
+         */
+        function mostrarResultadoTrivia() {
+            document.getElementById('trivia-pregunta').style.display = 'none';
+            document.getElementById('trivia-resultado').style.display = 'block';
+
+            const mensajes = [
+                { titulo: "😬 ¿Sos fan?", mensaje: "Parece que Zeri te es un poco desconocida. ¡Leé el lore y volvé a intentarlo!" },
+                { titulo: "⚡ Vas aprendiendo", mensaje: "No está mal, pero Zeri merece más estudio. ¡Otro intento!" },
+                { titulo: "🔥 Buen conocimiento", mensaje: "Sabés bastante de La Chispa de Zaun. ¡Casi perfecto!" },
+                { titulo: "✨ Sos fan de verdad", mensaje: "Conocés a Zeri como nadie. ¡La Chispa de Zaun estaría orgullosa!" }
+            ];
+
+            // Elegir nivel de mensaje según puntaje
+            const nivel = puntaje <= 1 ? 0 : puntaje <= 2 ? 1 : puntaje <= 4 ? 2 : 3;
+            document.getElementById('resultado-titulo').textContent = mensajes[nivel].titulo;
+            document.getElementById('resultado-puntaje').textContent = `${puntaje} / ${preguntas.length} correctas`;
+            document.getElementById('resultado-mensaje').textContent = mensajes[nivel].mensaje;
+        }
+
+        /*
+         * ============================================================
+         * FUNCIÓN: reiniciarTrivia()
+         * Resetea el estado de la trivia y vuelve a la primera pregunta.
+         * ============================================================
+         */
+        function reiniciarTrivia() {
+            preguntaActual = 0;
+            puntaje = 0;
+            document.getElementById('trivia-pregunta').style.display = 'block';
+            document.getElementById('trivia-resultado').style.display = 'none';
+            cargarPregunta();
+        }
+
+        // Cargar la primera pregunta al abrir la página
+        cargarPregunta();
+
+    </script>
 </body>
 </html>
