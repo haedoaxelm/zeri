@@ -1,0 +1,313 @@
+<html>
+<head>
+    <title>Zeri</title>
+    <link id="favicon" rel="icon" href="https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_OriginalCircle.png/48px-Zeri_OriginalCircle.png?8ae8b">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root{
+            --color-principal: #f5e642;
+        }
+        body{
+            background-color: #0a0f1e;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .navbar-lateral{
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px 12px;
+            background-color: rgba(17,24,39,0.8);
+            border-radius: 0 12px 12px 0;
+            border-right: 1px solid var(--color-principal);
+        }
+        .navbar-lateral a{
+            color: #64748b;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .navbar-lateral a:hover{
+            color: var(--color-principal);
+        }
+        h1{
+            color: var(--color-principal);
+            font-size: 60px;
+        }
+        h2{
+            color: var(--color-principal);
+        }
+        img{
+            border-radius: 12px;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        li{
+            margin: 8px 0;
+            font-size: 18px;
+        }
+        .habilidades{
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .tarjeta{
+            background-color: #111827;
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 10px 0;
+            width: 400px;
+            position: relative;
+        }
+        .tooltip-video{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 110%;
+            width: 280px;
+            background: #111827;
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip-video video{
+            width: 100%;
+        }
+        .tarjeta:hover .tooltip-video{
+            display: block;
+            opacity: 1;
+        }
+        .tarjeta h3{
+            color: var(--color-principal);
+            margin: 0 0 8px 0;
+        }
+        .descripcion{
+            max-width: 500px;
+            margin: 20px auto;
+            line-height: 1.8;
+            color: #94a3b8;
+        }
+        .contenedor-skins {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .contenedor-skins button{
+            background: transparent;
+            border: 2px solid var(--color-principal);
+            color: var(--color-principal);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .contenedor-skins button:hover{
+            background: var(--color-principal);
+            color: #0a0f1e;
+        }
+        .skins {
+            display: flex;
+            overflow: hidden;
+            width: 500px;
+        }
+        .skin{
+            border-radius: 8px;
+            margin: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.3s;
+        }
+        .skin:hover{
+            border: 2px solid var(--color-principal);
+        }
+        body.base {
+            background-color: #0a0f1e;
+            --color-principal: #f5e642;
+        }
+        body.witheredrose {
+            background-color: #1a0812;
+            --color-principal: #f542a7;
+        }
+        body.oceansong {
+            background-color: #051520;
+            --color-principal: #42c8f5;
+        }
+        body.immortaljourney {
+            background-color: #1a0e00;
+            --color-principal: #f5c842;
+        }
+        body.frightnight {
+            background-color: #050f05;
+            --color-principal: #42f55a;
+        }
+        body.prestige {
+            background-color: #0d0520;
+            --color-principal: #c842f5;
+        }
+        body.winterwonder {
+            background-color: #05101a;
+            --color-principal: #e8f0ff;
+        }
+        footer{
+            margin-top: 60px;
+            padding: 32px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #334155;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar-lateral">
+        <a href="#lore">Lore</a>
+        <a href="#skins">Skins</a>
+        <a href="#habilidades">Habilidades</a>
+    </nav>
+    <h1>Zeri</h1>
+    <p>La Chispa de Zaun</p>
+    <img id="imagen-principal"src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="400">
+    <p class="descripcion">
+        Zeri es una joven de Zaun que creció canalizando electricidad a través de su cuerpo.
+        Usa una pistola artesanal construida por su familia para proteger a los suyos.
+        Rápida, impulsiva, y con el corazón en el lugar correcto.
+    </p>
+    
+    <h2 id="lore">Lore</h2>
+    <p class="descripcion">
+        Zeri creció en los callejones grises de Zaun, rodeada de una familia unida que le enseñó 
+    que la comunidad es lo más importante. Desde pequeña manifestó una conexión inusual con 
+    la electricidad, que fluía a través de su cuerpo reflejando sus emociones. Su abuela le 
+    construyó una pistola especial para canalizar ese poder, y Zeri la usa para proteger 
+    a los suyos de las bandas y peligros de Zaun. Sueña con un futuro mejor para su ciudad, 
+    y corre hacia él con toda la energía que lleva dentro.
+    </p>
+
+    <h2 id="skins">Skins</h2>
+    <div class="contenedor-skins">
+        <button onclick="moverSkins(-1)">◀</button>
+         <div class="skins" id="contenedor-imagenes">
+            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg" width="150" class="skin" onclick="cambiarColor('base')">
+            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg" width="150" class="skin" onclick="cambiarColor('witheredrose')">
+            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b" width="150" class="skin" onclick="cambiarColor('oceansong')">
+            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f" width="150" class="skin" onclick="cambiarColor('immortaljourney')">
+            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99" width="150" class="skin" onclick="cambiarColor('frightnight')">
+            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb" width="150" class="skin" onclick="cambiarColor('prestige')">
+            <img src="https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3" width="150" class="skin" onclick="cambiarColor('winterwonder')">
+        </div>
+        <button onclick="moverSkins(1)">▶</button>
+    </div>
+    
+    <h2 id="habilidades">Habilidades</h2>
+    <div class="habilidades">
+        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
+            <h3>Pasiva - Poder Vital</h3>
+            <p>La electricidad le da velocidad cuando tiene escudos</p>
+            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/94ba5728f3682831b2a1fbcb9f57301354c0622d.mp4?accountingTag=LoL">
+            </div>
+        </div>
+
+        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
+            <h3>Q - Descarga Básica</h3>
+            <p>Dispara un rayo que rebota entre enemigos cercanos</p>
+            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/706f1f68e833f78d31d1d52496b6c6a61cc78809.mp4?accountingTag=LoL">
+            </div>
+        </div>
+
+        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
+            <h3>W - Chispa Errante</h3>
+            <p>Lanza una rafaga electrica. puede recargar escudos alidos</p>
+            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/ed2e023cbd33c89389e704988f9009e7cbaa7bc0.mp4?accountingTag=LoL">
+            </div>
+        </div>
+
+        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
+            <h3>E - Salto Electrico</h3>
+            <p>Dash rapido hacia adelante, puede atravesar paredes</p>
+            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/dea1f418527e51a1d2a854319afbda7fea1d2c40.mp4?accountingTag=LoL">
+            </div>
+        </div>
+
+        <div class="tarjeta" data-video="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
+            <h3>R - Tormenta Relampago</h3>
+            <p>Descarga explosiva que noquea enemigos y potencia a Zeri</p>
+            <div class="tooltip-video" data-src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news_live/5c7cda8871095362c07c6d7b33d2ac759ab79293.mp4?accountingTag=LoL">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cambiarColor(skin) {
+            document.body.className = skin;
+
+            if (skin === 'base') {
+                document.getElementById('imagen-principal').src = 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_0.jpg';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_OriginalCircle.png/48px-Zeri_OriginalCircle.png?8ae8b';
+            } else if (skin === 'witheredrose') {
+                document.getElementById('imagen-principal').src = 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_WitheredRoseCircle.png/48px-Zeri_WitheredRoseCircle.png?db3e4';
+            } else if (skin === 'oceansong') {
+                document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_OceanSongSkin.jpg?7853b';
+            } else if (skin === 'immortaljourney') {
+                document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_ImmortalJourneySkin.jpg?92a3f';
+            } else if (skin === 'frightnight') {
+                document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_FrightNightSkin.jpg?e8d99';
+            } else if (skin === 'prestige') {
+                document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_PrestigeFrightNightSkin.jpg?4c6cb';
+                document.getElementById('favicon').href = 'https://wiki.leagueoflegends.com/en-us/images/thumb/Zeri_PrestigeFrightNightCircle.png/48px-Zeri_PrestigeFrightNightCircle.png?80e42';
+            } else if (skin === 'winterwonder') {
+                document.getElementById('imagen-principal').src = 'https://wiki.leagueoflegends.com/en-us/images/Zeri_WinterWonderSkin.jpg?4d8b3';
+            }
+        }
+
+        function moverSkins(direccion) {
+            const contenedor = document.getElementById('contenedor-imagenes');
+            const imagen = contenedor.querySelector('img');
+            const ancho = imagen.getBoundingClientRect().width + 16;
+            contenedor.scrollLeft += direccion * ancho;
+        }
+
+        document.querySelectorAll('.tarjeta').forEach(function(tarjeta) {
+            tarjeta.addEventListener('mouseenter', function() {
+                const tooltip = tarjeta.querySelector('.tooltip-video');
+                if (tooltip && !tooltip.querySelector('video')) {
+                    const src = tooltip.getAttribute('data-src');
+                    const video = document.createElement('video');
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.style.width = '100%';
+                    const source = document.createElement('source');
+                    source.src = src;
+                    video.appendChild(source);
+                    tooltip.appendChild(video);
+                } else if (tooltip && tooltip.querySelector('video')) {
+                    tooltip.querySelector('video').currentTime = 0;
+                }
+            });
+        });
+</script>
+
+<footer>
+    <p>Fan page no oficial de Zeri — League of Legends es propiedad de Riot Games</p>
+    <p>Hecho con HTML, CSS y JavaScript</p>
+</footer>
+
+</body>
+</html>
