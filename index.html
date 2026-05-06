@@ -42,6 +42,9 @@
             color: var(--color-principal);
             font-size: 60px;
         }
+        h2{
+            color: var(--color-principal);
+        }
         img{
             border-radius: 12px;
         }
@@ -162,10 +165,18 @@
             background-color: #05101a;
             --color-principal: #e8f0ff;
         }
+        footer{
+            margin-top: 60px;
+            padding: 32px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #334155;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar-lateral">
+        <a href="#lore">Lore</a>
         <a href="#skins">Skins</a>
         <a href="#habilidades">Habilidades</a>
     </nav>
@@ -178,6 +189,15 @@
         Rápida, impulsiva, y con el corazón en el lugar correcto.
     </p>
     
+    <h2 id="lore">Lore</h2>
+    <p class="descripcion">
+        Zeri creció en los callejones grises de Zaun, rodeada de una familia unida que le enseñó 
+    que la comunidad es lo más importante. Desde pequeña manifestó una conexión inusual con 
+    la electricidad, que fluía a través de su cuerpo reflejando sus emociones. Su abuela le 
+    construyó una pistola especial para canalizar ese poder, y Zeri la usa para proteger 
+    a los suyos de las bandas y peligros de Zaun. Sueña con un futuro mejor para su ciudad, 
+    y corre hacia él con toda la energía que lleva dentro.
+    </p>
 
     <h2 id="skins">Skins</h2>
     <div class="contenedor-skins">
@@ -283,5 +303,11 @@
             });
         });
 </script>
+
+<footer>
+    <p>Fan page no oficial de Zeri — League of Legends es propiedad de Riot Games</p>
+    <p>Hecho con HTML, CSS y JavaScript</p>
+</footer>
+
 </body>
 </html>
