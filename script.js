@@ -287,31 +287,29 @@
          * una transición cubic-bezier que simula un resorte.
          * ============================================================ */
         barras.forEach(function(barra) {
-            barra.addEventListener('mousedown', function(e) {
-                e.preventDefault();
-                const contenedor = barra.parentElement;
-                barra.classList.add('arrastrando');
-                barra.classList.remove('volviendo');
+    const contenedor = barra.parentElement;
 
-                function onMouseMove(e) {
-                    const rect = contenedor.getBoundingClientRect();
-                    let nuevoPorcentaje = ((e.clientX - rect.left) / rect.width) * 100;
-                    nuevoPorcentaje = Math.min(100, Math.max(5, nuevoPorcentaje));
-                    barra.style.width = nuevoPorcentaje + '%';
-                }
+    contenedor.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        barra.classList.add('arrastrando');
+        barra.classList.remove('volviendo');
 
-                function onMouseUp() {
-                    barra.classList.remove('arrastrando');
-                    barra.classList.add('volviendo');
-                    // Volver al ancho original con animación tipo resorte
-                    barra.style.width = barra.dataset.anchoOriginal;
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                }
+        function onMouseMove(e) {
+            const rect = contenedor.getBoundingClientRect();
+            let nuevoPorcentaje = ((e.clientX - rect.left) / rect.width) * 100;
+            nuevoPorcentaje = Math.min(100, Math.max(5, nuevoPorcentaje));
+            barra.style.width = nuevoPorcentaje + '%';
+        }
 
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-            });
-        });
+        function onMouseUp() {
+            barra.classList.remove('arrastrando');
+            barra.classList.add('volviendo');
+            barra.style.width = barra.dataset.anchoOriginal;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
 
-    
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    });
+});
