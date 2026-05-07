@@ -191,10 +191,7 @@
             flex: 1;
             background: rgba(255,255,255,0.1);
             border-radius: 4px;
-            height: 6px;
-            cursor: grab;
-            padding: 8px 0;
-            margin: -8px 0;    
+            height: 6px;    
         }
         /* ============================================================
            ANIMACIÓN DE ENTRADA DE BARRAS
@@ -211,28 +208,12 @@
             height: 6px;
             background: var(--color-principal);
             border-radius: 4px;
-            width: 0%; /* empieza en 0, JS le pone el ancho real */
-            cursor: grab; /* indica que se puede arrastrar */
-            padding: 10px 0;
-            margin: -10px 0;
-            position: relative;
-            z-index: 1;    
+            width: 0%; /* empieza en 0, JS le pone el ancho real */    
         }
 
         /* Cuando JS agrega .animada, se dispara la animación de entrada */
         .stat-barra.animada {
             animation: crecer 1s ease-out forwards;
-        }
-
-        /* Mientras se arrastra, cambiar cursor */
-        .stat-barra.arrastrando {
-            cursor: grabbing;
-            transition: none !important;
-        }
-
-        /* Al soltar, vuelve suavemente con transición tipo resorte */
-        .stat-barra.volviendo {
-            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .stat-valor {
             color: var(--color-principal);
