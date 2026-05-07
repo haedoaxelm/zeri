@@ -1,3 +1,4 @@
+
         /*
          * ============================================================
          * FUNCIÓN: cambiarColor(skin)
@@ -246,3 +247,71 @@
 
         // Cargar la primera pregunta al abrir la página
         cargarPregunta();
+
+        /* ============================================================
+         * ANIMACIÓN DE ENTRADA DE BARRAS (Intersection Observer)
+         * Guarda el ancho original de cada barra en --ancho-final,
+         * las pone en 0, y dispara la animación cuando la sección
+         * entra en la pantalla.
+         * ============================================================ */
+        const barras = document.querySelectorAll('.stat-barra');
+
+        barras.forEach(function(barra) {
+            const anchoOriginal = barra.style.width;
+            barra.style.setProperty('--ancho-final', anchoOriginal);
+            barra.style.width = '0%';
+            barra.dataset.anchoOriginal = anchoOriginal;
+        });
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    // Animar cada barra con un pequeño delay escalonado
+                    barras.forEach(function(barra, i) {
+                        setTimeout(function() {
+                            barra.classList.add('animada');
+                            barra.style.width = barra.dataset.anchoOriginal;
+                        }, i * 150);
+                    });
+                    observer.disconnect(); // Solo animar una vez
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(document.querySelector('.stats'));
+
+        /* ============================================================
+         * DRAG DE BARRAS (arrastrar y soltar con efecto resorte)
+         * Al hacer mousedown sobre una barra, el usuario puede
+         * arrastrarla. Al soltar, vuelve a su ancho original con
+         * una transición cubic-bezier que simula un resorte.
+         * ============================================================ */
+        barras.forEach(function(barra) {
+            barra.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                const contenedor = barra.parentElement;
+                barra.classList.add('arrastrando');
+                barra.classList.remove('volviendo');
+
+                function onMouseMove(e) {
+                    const rect = contenedor.getBoundingClientRect();
+                    let nuevoPorcentaje = ((e.clientX - rect.left) / rect.width) * 100;
+                    nuevoPorcentaje = Math.min(100, Math.max(5, nuevoPorcentaje));
+                    barra.style.width = nuevoPorcentaje + '%';
+                }
+
+                function onMouseUp() {
+                    barra.classList.remove('arrastrando');
+                    barra.classList.add('volviendo');
+                    // Volver al ancho original con animación tipo resorte
+                    barra.style.width = barra.dataset.anchoOriginal;
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                }
+
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+        });
+
+    
