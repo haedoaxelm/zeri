@@ -17,6 +17,8 @@ Página web dedicada a Zeri, "La Chispa de Zaun", que incluye su lore, estadíst
 zeri/
 │
 ├── index.html       # Archivo principal con todo el contenido
+├── style.css        # Archivo para lo estetico
+├── script.js        # Archivo para lo funcional
 └── README.md        # Este archivo
 ```
 
