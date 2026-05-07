@@ -192,6 +192,9 @@
             background: rgba(255,255,255,0.1);
             border-radius: 4px;
             height: 6px;
+            cursor: grab;
+            padding: 8px 0;
+            margin: -8px 0;    
         }
         /* ============================================================
            ANIMACIÓN DE ENTRADA DE BARRAS
@@ -210,6 +213,10 @@
             border-radius: 4px;
             width: 0%; /* empieza en 0, JS le pone el ancho real */
             cursor: grab; /* indica que se puede arrastrar */
+            padding: 10px 0;
+            margin: -10px 0;
+            position: relative;
+            z-index: 1;    
         }
 
         /* Cuando JS agrega .animada, se dispara la animación de entrada */
