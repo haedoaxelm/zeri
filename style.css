@@ -503,4 +503,149 @@
             background: var(--color-principal);
             color: #0a0f1e;
         }
-    
+/* ============================================================
+   MEDIDOR DE VOLTAJE
+   Panel fijo a la derecha, aparece solo al clickear rápido.
+============================================================ */
+#voltaje-panel {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 12px;
+    background-color: rgba(17,24,39,0.8);
+    border-radius: 12px 0 0 12px;
+    border-left: 1px solid var(--color-principal);
+    z-index: 998;
+}
+
+#voltaje-label {
+    font-size: 10px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+#voltaje-fondo {
+    width: 8px;
+    height: 120px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+#voltaje-barra {
+    width: 100%;
+    height: 0%;
+    background: var(--color-principal);
+    border-radius: 4px;
+    transition: height 0.1s ease, background 0.3s;
+}
+
+#voltaje-barra.peligro {
+    background: #ff4444;
+    box-shadow: 0 0 10px rgba(255,68,68,0.6);
+}
+
+#voltaje-numero {
+    font-size: 10px;
+    color: var(--color-principal);
+    font-weight: bold;
+}
+
+/* Overlay de descarga */
+#descarga-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+#descarga-overlay.activo {
+    display: block;
+    animation: descarga-total 0.8s ease forwards;
+}
+
+@keyframes descarga-total {
+    0%   { background: rgba(245,230,66,0); }
+    20%  { background: rgba(245,230,66,0.5); }
+    50%  { background: rgba(245,230,66,0.1); }
+    80%  { background: rgba(245,230,66,0.4); }
+    100% { background: rgba(245,230,66,0); }
+}
+
+#texto-descarga {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--color-principal);
+    text-shadow: 0 0 30px var(--color-principal);
+    z-index: 10000;
+    pointer-events: none;
+    animation: texto-flash 0.8s ease forwards;
+}
+
+@keyframes texto-flash {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    70%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+}
+
+.rayo-descarga {
+    position: fixed;
+    font-size: 60px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: rayo-aparecer 0.8s ease forwards;
+}
+
+@keyframes rayo-aparecer {
+    0%   { opacity: 0; transform: scale(0.5); }
+    30%  { opacity: 1; transform: scale(1.3); }
+    100% { opacity: 0; transform: scale(0.8); }
+}
+
+@media (max-width: 768px) {
+    #voltaje-panel {
+        /* En móvil: panel horizontal abajo en lugar de vertical a la derecha */
+        top: auto;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        transform: none;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px 12px 0 0;
+        border-left: none;
+        border-top: 1px solid var(--color-principal);
+        padding: 10px 20px;
+        gap: 12px;
+        width: 100%;
+    }
+
+    #voltaje-fondo {
+        width: 120px;
+        height: 8px;
+        align-items: flex-start;
+    }
+
+    #voltaje-barra {
+        width: 0%;
+        height: 100%;
+        transition: width 0.1s ease, background 0.3s;
+    }
+}

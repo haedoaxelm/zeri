@@ -279,3 +279,103 @@
         }, { threshold: 0.3 });
 
         observer.observe(document.querySelector('.stats'));
+        
+/* ============================================================
+   MEDIDOR DE VOLTAJE
+   Aparece cuando el usuario clickea rápido (más de 3 clicks
+   en menos de 1 segundo). Sube con cada click y baja solo.
+   Al llegar al 100% lanza la animación de descarga.
+============================================================ */
+let voltaje = 0;
+let descargando = false;
+let clicksRecientes = [];
+const panel = document.getElementById('voltaje-panel');
+const barraVoltaje = document.getElementById('voltaje-barra');
+const numeroVoltaje = document.getElementById('voltaje-numero');
+const overlay = document.getElementById('descarga-overlay');
+const textoDescarga = document.getElementById('texto-descarga');
+
+// Bajar el voltaje automáticamente cada 50ms
+setInterval(function() {
+    if (!descargando && voltaje > 0) {
+        voltaje = Math.max(0, voltaje - 1.5);
+        actualizarVoltaje();
+
+        // Ocultar panel si llega a 0
+        if (voltaje === 0) {
+            panel.style.display = 'none';
+        }
+    }
+}, 50);
+
+// Detectar clicks en toda la página
+document.addEventListener('click', function() {
+    if (descargando) return;
+
+    // Registrar el click con timestamp
+    const ahora = Date.now();
+    clicksRecientes.push(ahora);
+
+    // Limpiar clicks viejos (más de 1 segundo)
+    clicksRecientes = clicksRecientes.filter(t => ahora - t < 1000);
+
+    // Solo activar si hay más de 3 clicks en el último segundo
+    if (clicksRecientes.length >= 3) {
+        panel.style.display = 'flex';
+        voltaje = Math.min(100, voltaje + 8);
+        actualizarVoltaje();
+
+        if (voltaje >= 100) {
+            lanzarDescarga();
+        }
+    }
+});
+
+function actualizarVoltaje() {
+    // En móvil la barra es horizontal (width), en escritorio es vertical (height)
+    const esMobil = window.innerWidth <= 768;
+    if (esMobil) {
+        barraVoltaje.style.width = voltaje + '%';
+        barraVoltaje.style.height = '100%';
+    } else {
+        barraVoltaje.style.height = voltaje + '%';
+        barraVoltaje.style.width = '100%';
+    }
+    numeroVoltaje.textContent = Math.round(voltaje) + '%';
+
+    if (voltaje >= 70) {
+        barraVoltaje.classList.add('peligro');
+    } else {
+        barraVoltaje.classList.remove('peligro');
+    }
+}
+
+function lanzarDescarga() {
+    descargando = true;
+
+    overlay.classList.add('activo');
+    textoDescarga.style.display = 'block';
+
+    // Crear rayos en posiciones aleatorias
+    for (let i = 0; i < 6; i++) {
+        const rayo = document.createElement('div');
+        rayo.className = 'rayo-descarga';
+        rayo.textContent = '⚡';
+        rayo.style.top = Math.random() * 80 + '%';
+        rayo.style.left = Math.random() * 80 + '%';
+        rayo.style.animationDelay = (Math.random() * 0.3) + 's';
+        document.body.appendChild(rayo);
+        setTimeout(() => rayo.remove(), 1000);
+    }
+
+    // Resetear después de la animación
+    setTimeout(function() {
+        overlay.classList.remove('activo');
+        textoDescarga.style.display = 'none';
+        voltaje = 0;
+        actualizarVoltaje();
+        panel.style.display = 'none';
+        descargando = false;
+        clicksRecientes = [];
+    }, 900);
+}
