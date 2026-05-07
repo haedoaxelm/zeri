@@ -1,0 +1,478 @@
+        /* ============================================================
+           VARIABLES GLOBALES
+           Se definen aquí para poder cambiarlas fácilmente desde JS
+           añadiendo una clase al body (ver sección de temas/skins).
+        ============================================================ */
+        :root{
+            --color-principal: #f5e642; /* Amarillo base de Zeri */
+        }
+
+        /* Estilos generales del cuerpo de la página */
+        body{
+            background-color: #0a0f1e;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* ============================================================
+           NAVBAR LATERAL
+           Aparece fija a la izquierda al hacer scroll (escritorio)
+           o como menú desplegable arriba (móvil).
+        ============================================================ */
+        .navbar-lateral{
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none; /* Se activa con JS al hacer scroll */
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px 12px;
+            background-color: rgba(17,24,39,0.8);
+            border-radius: 0 12px 12px 0;
+            border-right: 1px solid var(--color-principal);
+        }
+        .navbar-lateral a{
+            color: #64748b;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .navbar-lateral a:hover{
+            color: var(--color-principal);
+        }
+
+        /* Botón ☰ visible solo en móvil para abrir el menú */
+        .btn-hamburguesa {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(17,24,39,0.8);
+            border: 1px solid var(--color-principal);
+            color: var(--color-principal);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* ============================================================
+           ANIMACIÓN: PULSAR
+           Hace que el h1 brille de forma cíclica usando text-shadow.
+        ============================================================ */
+        @keyframes pulsar {
+            0%, 100% { text-shadow: 0 0 10px var(--color-principal); }
+            50%       { text-shadow: 0 0 40px var(--color-principal), 0 0 80px var(--color-principal); }
+        }
+
+        h1 {
+            color: var(--color-principal);
+            font-size: 60px;
+            animation: pulsar 2s ease-in-out infinite;
+        }
+        h2{
+            color: var(--color-principal);
+        }
+        img{
+            border-radius: 12px;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+        }
+        li{
+            margin: 8px 0;
+            font-size: 18px;
+        }
+
+        /* ============================================================
+           TARJETAS DE HABILIDADES
+           Cada tarjeta muestra el nombre y descripción de una habilidad.
+           Al hacer hover aparece un tooltip con un video de demostración.
+        ============================================================ */
+        .habilidades{
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .tarjeta{
+            background-color: #111827;
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 10px 0;
+            width: 400px;
+            position: relative; /* Necesario para posicionar el tooltip */
+        }
+        /* Tooltip con video: se posiciona a la derecha de la tarjeta */
+        .tooltip-video{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 110%;
+            width: 280px;
+            background: #111827;
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip-video video{
+            width: 100%;
+        }
+        /* El tooltip aparece cuando el usuario pasa el mouse por la tarjeta */
+        .tarjeta:hover .tooltip-video{
+            display: block;
+            opacity: 1;
+        }
+        .tarjeta h3{
+            color: var(--color-principal);
+            margin: 0 0 8px 0;
+        }
+        .descripcion{
+            max-width: 500px;
+            margin: 20px auto;
+            line-height: 1.8;
+            color: #94a3b8;
+        }
+
+        /* ============================================================
+           SECCIÓN DE ESTADÍSTICAS
+           Barras visuales que representan los stats base de Zeri.
+        ============================================================ */
+        .stats-contenedor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+        .stats {
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            overflow: hidden;
+            min-width: 350px;
+        }
+        .stat-fila {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-fila:last-child {
+            border-bottom: none;
+        }
+        .stat-nombre {
+            color: #94a3b8;
+            width: 120px;
+            text-align: left;
+        }
+        /* Contenedor gris de fondo para la barra */
+        .stat-barra-contenedor {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            height: 6px;
+        }
+        /* Barra coloreada: su ancho (en %) representa el valor del stat */
+        .stat-barra {
+            height: 6px;
+            background: var(--color-principal);
+            border-radius: 4px;
+        }
+        .stat-valor {
+            color: var(--color-principal);
+            font-weight: bold;
+            width: 40px;
+            text-align: right;
+        }
+
+        /* ============================================================
+           CARRUSEL DE SKINS
+           Muestra miniaturas de las skins; se desplaza con botones.
+        ============================================================ */
+        .contenedor-skins {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .contenedor-skins button{
+            background: transparent;
+            border: 2px solid var(--color-principal);
+            color: var(--color-principal);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .contenedor-skins button:hover{
+            background: var(--color-principal);
+            color: #0a0f1e;
+        }
+        /* Ventana del carrusel: solo muestra 3 skins a la vez */
+        .skins {
+            display: flex;
+            overflow: hidden;
+            width: calc(3 * 116px);
+        }
+        .skin-item {
+            min-width: 100px;
+            margin: 0 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .skin {
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.3s;
+        }
+        .skin:hover {
+            border: 2px solid var(--color-principal);
+        }
+        .skin-item p {
+            margin: 6px 0 0 0;
+            font-size: 12px;
+            color: var(--color-principal);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+           TEMAS POR SKIN
+           Cada clase aplicada al body cambia el fondo y el color principal.
+           Esto hace que todos los elementos que usan var(--color-principal)
+           se actualicen automáticamente.
+        ============================================================ */
+        body.base           { background-color: #0a0f1e; --color-principal: #f5e642; }
+        body.witheredrose   { background-color: #1a0812; --color-principal: #f542a7; }
+        body.oceansong      { background-color: #051520; --color-principal: #42c8f5; }
+        body.immortaljourney{ background-color: #1a0e00; --color-principal: #f5c842; }
+        body.frightnight    { background-color: #050f05; --color-principal: #42f55a; }
+        body.prestige       { background-color: #0d0520; --color-principal: #c842f5; }
+        body.winterwonder   { background-color: #05101a; --color-principal: #e8f0ff; }
+
+        footer{
+            margin-top: 60px;
+            padding: 32px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #334155;
+            font-size: 0.85rem;
+        }
+        section{
+            padding: 80px 0;
+        }
+
+        /* ============================================================
+           SECCIÓN HERO (inicio)
+           Layout horizontal con texto a la izquierda e imagen a la derecha.
+        ============================================================ */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            gap: 60px;
+            padding: 0 60px;
+        }
+        .hero-texto {
+            text-align: left;
+            max-width: 450px;
+        }
+        .hero-subtitulo {
+            color: var(--color-principal);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .descripcion {
+            max-width: 500px;
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #94a3b8;
+        }
+        .lore {
+            text-align: center;
+        }
+        .lore .descripcion {
+            margin: 20px auto;
+        }
+
+        /* ============================================================
+           RESPONSIVE (pantallas pequeñas)
+           Cambia el layout para que sea usable en celular.
+        ============================================================ */
+        @media (max-width: 768px) {
+            /* El menú lateral pasa a ser una barra horizontal arriba */
+            .navbar-lateral {
+                display: none;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                border-radius: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--color-principal);
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+                padding: 8px 16px;
+                z-index: 999;
+            }
+            .btn-hamburguesa {
+                display: block; /* Solo visible en móvil */
+            }
+            /* El hero pasa de columnas a filas (vertical) */
+            .hero {
+                flex-direction: column;
+                min-height: auto;
+                padding: 40px 20px;
+                gap: 30px;
+            }
+            .hero-texto {
+                text-align: center;
+            }
+            .hero-imagen {
+                width: 100%;
+                padding: 0 20px;
+            }
+            .skin-item {
+                min-width: 80px;
+                margin: 0 12px;
+            }
+            /* En móvil el carrusel es deslizable con el dedo, se ocultan los botones */
+            .contenedor-skins button {
+                display: none;
+            }
+            .skins {
+                width: 100%;
+                overflow-x: auto;
+            }
+            #imagen-principal {
+                width: 100%;
+                max-width: 100%;
+            }
+            section {
+                padding: 40px 20px;
+            }
+            .stats {
+                min-width: unset;
+                width: 100%;
+            }
+            .stats-contenedor {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+            /* Las tarjetas de habilidades se apilan verticalmente */
+            .habilidades {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            /* El tooltip de video pasa a estar debajo de la tarjeta en móvil */
+            .tooltip-video {
+                position: relative;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin-top: 12px;
+            }
+            .tarjeta {
+                width: 90%;
+            }
+        }
+
+        /* Línea divisora entre secciones */
+        .divisor {
+            border: none;
+            border-top: 1px solid var(--color-principal);
+            opacity: 0.3;
+            margin: 0 40px;
+        }
+        footer {
+            padding: 32px 20px;
+        }
+
+        /* ============================================================
+           ESTILOS DE LA TRIVIA
+        ============================================================ */
+        .minijuego-tarjeta {
+            background-color: #111827;
+            border: 1px solid var(--color-principal);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .meta-texto {
+            color: #64748b;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 0 0 12px 0;
+        }
+        /* Botones de respuesta: estado neutro, correcto e incorrecto */
+        .minijuego-btn-opcion {
+            background: transparent;
+            border: 1px solid #334155;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .minijuego-btn-opcion:hover {
+            border-color: var(--color-principal);
+        }
+        .minijuego-btn-opcion.correcto {
+            border-color: #22c55e;
+            color: #22c55e;
+            background: rgba(34,197,94,0.1);
+            cursor: default;
+        }
+        .minijuego-btn-opcion.incorrecto {
+            border-color: #ef4444;
+            color: #ef4444;
+            background: rgba(239,68,68,0.1);
+            cursor: default;
+        }
+        .resultado-titulo {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            color: var(--color-principal);
+        }
+        .btn-reiniciar {
+            background: transparent;
+            border: 2px solid var(--color-principal);
+            color: var(--color-principal);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-reiniciar:hover {
+            background: var(--color-principal);
+            color: #0a0f1e;
+        }
