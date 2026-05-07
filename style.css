@@ -1,3 +1,4 @@
+
         /* ============================================================
            VARIABLES GLOBALES
            Se definen aquí para poder cambiarlas fácilmente desde JS
@@ -128,6 +129,16 @@
         .tooltip-video video{
             width: 100%;
         }
+        /* Hover de tarjeta: se eleva y el borde brilla */
+        .tarjeta {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .tarjeta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 12px var(--color-principal);
+            border-color: var(--color-principal);
+        }
+
         /* El tooltip aparece cuando el usuario pasa el mouse por la tarjeta */
         .tarjeta:hover .tooltip-video{
             display: block;
@@ -182,11 +193,39 @@
             border-radius: 4px;
             height: 6px;
         }
+        /* ============================================================
+           ANIMACIÓN DE ENTRADA DE BARRAS
+           Al entrar en la sección, las barras crecen de 0 al valor real.
+           La clase .animada se agrega con JS via Intersection Observer.
+        ============================================================ */
+        @keyframes crecer {
+            from { width: 0%; }
+            to   { width: var(--ancho-final); }
+        }
+
         /* Barra coloreada: su ancho (en %) representa el valor del stat */
         .stat-barra {
             height: 6px;
             background: var(--color-principal);
             border-radius: 4px;
+            width: 0%; /* empieza en 0, JS le pone el ancho real */
+            cursor: grab; /* indica que se puede arrastrar */
+        }
+
+        /* Cuando JS agrega .animada, se dispara la animación de entrada */
+        .stat-barra.animada {
+            animation: crecer 1s ease-out forwards;
+        }
+
+        /* Mientras se arrastra, cambiar cursor */
+        .stat-barra.arrastrando {
+            cursor: grabbing;
+            transition: none !important;
+        }
+
+        /* Al soltar, vuelve suavemente con transición tipo resorte */
+        .stat-barra.volviendo {
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .stat-valor {
             color: var(--color-principal);
@@ -476,3 +515,4 @@
             background: var(--color-principal);
             color: #0a0f1e;
         }
+    
