@@ -279,38 +279,3 @@
         }, { threshold: 0.3 });
 
         observer.observe(document.querySelector('.stats'));
-
-        /* ============================================================
-         * DRAG DE BARRAS (arrastrar y soltar con efecto resorte)
-         * Al hacer mousedown sobre una barra, el usuario puede
-         * arrastrarla. Al soltar, vuelve a su ancho original con
-         * una transición cubic-bezier que simula un resorte.
-         * ============================================================ */
-       barras.forEach(function(barra) {
-    const contenedor = barra.parentElement;
-
-    contenedor.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        barra.classList.remove('animada');
-        barra.classList.remove('volviendo');
-        barra.classList.add('arrastrando');
-
-        function onMouseMove(e) {
-            const rect = contenedor.getBoundingClientRect();
-            let pct = ((e.clientX - rect.left) / rect.width) * 100;
-            pct = Math.min(100, Math.max(5, pct));
-            barra.style.setProperty('width', pct + '%', 'important');
-        }
-
-        function onMouseUp() {
-            barra.classList.remove('arrastrando');
-            barra.classList.add('volviendo');
-            barra.style.setProperty('width', barra.dataset.anchoOriginal, 'important');
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-    });
-});
